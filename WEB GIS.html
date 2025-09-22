@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>WebGIS Practical</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      height: 100vh;
+      width: 100%;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Sidebar (left) */
+    .city-panel {
+      width: 250px;
+      background: lightgreen;
+      padding: 20px;
+      box-shadow: 2px 0 6px rgba(0,0,0,0.3);
+    }
+    .city-panel h2 {
+      text-align: center;
+      margin-bottom: 15px;
+    }
+    .city-panel ul {
+      list-style: none;
+      padding: 0;
+    }
+    .city-panel li {
+      margin: 12px 0;
+      cursor: pointer;
+      font-weight: bold;
+      color: #003300;
+      padding: 8px;
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
+    .city-panel li:hover {
+      background: #9fd89f;
+    }
+
+    /* Map (right side) */
+    #map {
+      flex: 1;
+      height: 100%;
+      width: 100%;
+    }
+
+    /* Top-right header */
+    .header {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      background: white;
+      padding: 10px 15px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      text-align: right;
+      z-index: 1000;
+    }
+    .header b {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+    .header span {
+      font-size: 14px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Left Sidebar -->
+  <div class="city-panel">
+    <h2>Cities</h2>
+    <ul>
+      <li onclick="goToCity('islamabad')">Islamabad</li>
+      <li onclick="goToCity('karachi')">Karachi</li>
+      <li onclick="goToCity('peshawar')">Peshawar</li>
+      <li onclick="goToCity('lahore')">Lahore</li>
+      <li onclick="goToCity('quetta')">Quetta</li>
+      <li onclick="goToCity('rawalpindi')">Rawalpindi</li>
+    </ul>
+  </div>
+
+  <!-- Map -->
+  <div id="map"></div>
+
+  <!-- Top-right header -->
+  <div class="header">
+    <b>Practical 1</b>
+    <span>Jaffar Waqas (MS Scholar)</span>
+  </div>
+
+  <!-- Leaflet JS -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script>
+    // Initialize map
+    var map = L.map('map').setView([30.3753, 69.3451], 5);
+
+    // Base map
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Markers
+    var islamabad = L.marker([33.6844, 73.0479]).addTo(map).bindPopup("<b>Islamabad</b><br>Capital of Pakistan.");
+    var karachi = L.marker([24.8607, 67.0011]).addTo(map).bindPopup("<b>Karachi</b><br>Largest city of Pakistan.");
+    var peshawar = L.marker([34.0151, 71.5249]).addTo(map).bindPopup("<b>Peshawar</b><br>Capital of Khyber Pakhtunkhwa.");
+    var lahore = L.marker([31.5497, 74.3436]).addTo(map).bindPopup("<b>Lahore</b><br>Capital of Punjab.");
+    var quetta = L.marker([30.1798, 66.9750]).addTo(map).bindPopup("<b>Quetta</b><br>Capital of Balochistan.");
+     var rawalpindi = L.marker([33.5848, 73.0658]).addTo(map).bindPopup("<b>Rawalpindi</b><br>City of Pakistan.");
+
+
+    // Coordinates dictionary
+    var cities = {
+      islamabad: [33.6844, 73.0479],
+      karachi: [24.8607, 67.0011],
+      peshawar: [34.0151, 71.5249],
+      lahore: [31.5497, 74.3436],
+      quetta: [30.1798, 66.9750],
+      rawalpindi:[33.5848, 73.0658],
+    };
+
+    // Zoom to city
+    function goToCity(city) {
+      var coords = cities[city];
+      map.setView(coords, 10);
+    }
+  </script>
+</body>
+</html>
+
